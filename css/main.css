@@ -1,0 +1,59 @@
+/* CONTAINERS
+---------------------------------------------------
+*/
+body {
+    background-color: var(--secondary-clr);
+}
+.container {
+    background-color: var(--bg-color);
+    max-width: 800px;
+    width: 100%;
+    /* TEST */
+    height: 100vh;
+    margin: auto;
+    position: relative;
+}
+
+/* NAVIGATION
+---------------------------------------------------
+*/
+nav {
+    top: 0;
+    padding: 1em;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
+h1 {
+    font-style: italic;
+    color: var(--primary-clr);
+    font-weight: 600;
+    font-size: 2em;
+}
+
+/* search-bar */
+.search-bar {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 2px;
+    border-radius: 25px;
+    padding: .5em 1em;
+}
+.search-bar:hover {
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 4px;
+}
+.search-bar i {
+    padding-right: .25em;
+    color: var(--primary-clr);
+}
+.search-bar input::placeholder {
+    color: var(--primary-clr);
+}
+
+/* buttons */
+
+/* MAIN
+---------------------------------------------------
+*/
+
+/* FOOTER
+---------------------------------------------------
+*/
+footer {
+    bottom: 0;
+}
