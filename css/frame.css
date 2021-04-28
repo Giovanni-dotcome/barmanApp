@@ -28,6 +28,9 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+img {
+	max-width: 100%;
+}
 body {
 	line-height: 1;
 }
@@ -253,10 +256,14 @@ select[multiple]
     position: fixed;
     left: 50%;
     transform: translate(-50%, 0);
-    max-width: 800px;
+    max-width: 1200px;
     width: 100%;
 }
-
+.grid {
+	display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
+    grid-gap: 1rem;
+}
 /* BUTTONS
 ---------------------------------------------------
 */
@@ -304,3 +311,4 @@ select[multiple]
     animation: moveInBottom 5s ease-out;
     animation-fill-mode: backwards;
 }
+

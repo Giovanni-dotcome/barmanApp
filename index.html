@@ -26,9 +26,43 @@
                     <button class="button">Authors</button>
                     <button class="button">About</button>
                 </div>
+                <div class="burger-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
             </nav>
-            <main>
-
+            <main class="deck row-flex-around">
+                <div v-for="drink in drinks" class="card column-flex-around">
+                    <div class="top row-flex-center">
+                        <h2 class="name">{{drink.strDrink}}</h2>
+                    </div>
+                    <div class="content">
+                        <div v-if="visibility(drink)" class="front">
+                            <div class="image"><img :src="drink.strDrinkThumb" alt=""></div>
+                        </div>
+                        <div v-else class="retro">
+                            <ul class="ingredients column-flex-around">
+                                <div>Ingredients:</div>  
+                                <li class="ingredient column-flex-around">
+                                    <div class="singleIngredient row-flex-center">
+                                        <div class="ingredientSub column-flex-center">
+                                            <span v-for="ingredient in drink.ingredients">{{ingredient}}:</span>
+                                        </div>
+                                        <div class="measureSub column-flex-center">
+                                            <span v-for="singleMeasure in drink.measure">{{singleMeasure}}</span>
+                                        </div>
+                                    </div>     
+                                </li>
+                            </ul>
+                            <div class="instructions">
+                                <h3>Instructions:</h3>
+                                <p>{{drink.strInstructions}}</p>                     
+                            </div>
+                        </div>
+                    </div>
+                    <div class="base row-flex-center">
+                        <button class="button" @click="flipCard(drink)">flip</button>
+                    </div>
+                </div>
             </main>
             <footer class="fixed">
                 <i class="fab fa-github"></i>
