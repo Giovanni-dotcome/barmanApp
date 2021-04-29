@@ -3,6 +3,7 @@ var app = new Vue({
     data: {
         drinks: [],
         ingridients: [],
+        searchInput: '',
     },
     methods: {
         flipCard(drink) {
@@ -23,14 +24,18 @@ var app = new Vue({
             } else {
                 return false
             }
+        },
+        searchByName() {
+            this.drinks.forEach(drink=>{
+                if (!drink.strDrink.includes(this.searchInput)) {
+                    this.drink.strIngredient15 = false;
+                }
+            })
         }
     },
     mounted(){
         axios.get('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=').then(response => {
             this.drinks = response.data.drinks
-            this.drinks.forEach(drink=>{
-                console.log(drink.strIngredient15);
-            })
         })
     },
     beforeUpdate(){

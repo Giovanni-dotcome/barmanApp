@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/frame.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/355b890a2e.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
@@ -20,7 +22,7 @@
                 </div>
                 <div class="search-bar row-flex-between">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="search cocktail">
+                    <input type="text" placeholder="search cocktail" v-model="searchInput" v-on:keyup="searchByName()">
                 </div>
                 <div class="buttons">
                     <button class="button">Authors</button>
@@ -45,7 +47,7 @@
                                 <li class="ingredient column-flex-around">
                                     <div class="singleIngredient row-flex-center">
                                         <div class="ingredientSub column-flex-center">
-                                            <span v-for="ingredient in drink.ingredients">{{ingredient}}:</span>
+                                            <span v-if="ingredient != false" v-for="ingredient in drink.ingredients">{{ingredient}}:</span>
                                         </div>
                                         <div class="measureSub column-flex-center">
                                             <span v-for="singleMeasure in drink.measure">{{singleMeasure}}</span>

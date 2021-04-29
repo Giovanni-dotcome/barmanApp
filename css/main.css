@@ -3,14 +3,17 @@
 */
 body {
     background-color: var(--secondary-clr);
+    font-family: 'Roboto', sans-serif;
+}
+h1 {
+    font-family: sans-serif;
 }
 .container {
     min-height: 100vh;
-    padding-top: 5em;
+    padding-top: 6em;
     padding-left: 1em;
     padding-right: 1em;
     background-color: var(--bg-color);
-    max-width: 1200px;
     width: 100%;
     margin: auto;
     position: relative;
@@ -22,6 +25,8 @@ body {
 nav {
     top: 0;
     padding: 1em;
+    margin-top: 1em;
+    border-radius: 25px;
     background-color: var(--bg-color);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
 h1 {
@@ -34,7 +39,7 @@ h1 {
 /* search-bar */
 .search-bar {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 2px;
-    border-radius: 25px;
+    border-radius: 2500px;
     padding: .5em 1em;
 }
 .search-bar:hover {
@@ -66,15 +71,19 @@ h1 {
     flex-wrap: wrap;
 }
 .card {
-    height: 360px;
+    margin: 1em .5em;
+    height: 380px;
     width: 300px;
-    margin-bottom: 1em;
     border-radius: 15px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
+.top {
+    height: 30px;
+}
 .content {
-    height: 280px;
-    padding: .5em;
+    /* NON TOCCARE COJONE */
+    height: 260px;
+    padding: 0 .5em;
 }
 .content .front {
     height: 100%;
@@ -85,12 +94,13 @@ h1 {
     width: 100%;
 }
 .content img {
+    object-fit: contain;
     height: 100%;
     width: 100%;
 }
 h2,
 .base .button {
-    padding: .25em .5em;
+    padding: .5em 1.5em;
     font-size: 1.3em;
     font-weight: 500;
     border-radius: 0;
@@ -116,6 +126,10 @@ footer {
 ---------------------------------------------------
 */
 @media screen and (max-width: 700px) {
+    nav {
+        border-radius: 0;
+        margin-top: 0;
+    }
     .buttons {
       display: none;
     }
