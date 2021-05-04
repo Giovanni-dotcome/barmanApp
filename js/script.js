@@ -1,66 +1,90 @@
 var app = new Vue({
     el: '#root',
     data: {
+        URL: `https://www.thecocktaildb.com/api/json/v1/1/`,
         drinks: [],
-        ingridients: [],
+        ingredientsList: [],
+        typesList: [],
+        selectedType: '',
         searchInput: '',
+        selectedIngredient: '',
+    },
+    mounted() {
+        axios.get(`${this.URL}list.php?`, {
+            params: {
+                'i' : 'list'
+            }
+        }).then(response => {
+            this.ingredientsList = response.data.drinks
+        }),
+        axios.get(`${this.URL}list.php?`, {
+            params: {
+                'c' : 'list'
+            }
+        }).then(response => {
+            this.typesList = response.data.drinks
+        })
     },
     methods: {
         flipCard(drink) {
-            if (drink.strIngredient15 === null) {
-                drink.strIngredient15 = false
-            } else {
-                drink.strIngredient15 = null
-            }
-            this.drinks.forEach(el =>{
-                if (el.strDrink != drink.strDrink) {
-                    el.strIngredient15 = null
+            this.drinks.forEach(singleDrink => {
+                if (singleDrink.idDrink != drink.idDrink) {
+                    singleDrink.boolean = true
+                } else {
+                    drink.boolean = !drink.boolean
                 }
             })
-        },
-        visibility(drink) {
-            if (drink.strIngredient15 === null) {
-                return true
-            } else {
-                return false
-            }
         },
         searchByName() {
-            this.drinks.forEach(drink=>{
-                if (!drink.strDrink.includes(this.searchInput)) {
-                    this.drink.strIngredient15 = false;
+            axios.get(`${this.URL}search.php?`, {
+                params: {
+                    's' : this.searchInput
                 }
+            }).then(response => {
+                this.drinks = response.data.drinks
+                this.drinks.forEach(drink => {
+                    this.$set(drink, 'boolean', true)
+                    this.$set(drink, 'visibility', true)
+                    this.$set(drink, 'ingredients', [])
+                    for (const key in drink) {
+                        if (key.includes('strIngredient') && drink[key] != null) {
+                            drink.ingredients.push(drink[key])
+                        }
+                    }
+                });
             })
+        },
+        selectType() {
+            if (this.selectedType == 'all') {
+                this.drinks.forEach(drink => {
+                    drink.visibility = true
+                })
+            } else {
+                this.drinks.forEach(drink => {
+                    if (drink.strCategory != this.selectedType) {
+                        drink.visibility = false
+                    } else {
+                        drink.visibility = true
+                    }
+                })
+            }
+        },
+        selectIngredient() {
+            if (this.selectedIngredient == 'all') {
+                this.drinks.forEach(drink => {
+                    drink.visibility = true
+                })
+            } else {
+                this.drinks.forEach(drink => {
+                    var flag = false;
+                    drink.ingredients.forEach(ingredient => {
+                        if (ingredient == this.selectedIngredient) {
+                            flag = true
+                        }
+                    drink.visibility = flag
+                    })
+                })
+            }
         }
-    },
-    mounted(){
-        axios.get('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=').then(response => {
-            this.drinks = response.data.drinks
-        })
-    },
-    beforeUpdate(){
-        this.drinks.forEach(drink => {
-            let ingredients = []
-            for (const key in drink) {
-                if (key.includes('strIngredient')) {
-                    if (drink[key] != null) {
-                        ingredients.push(drink[key])
-                    }
-                }
-            }
-            drink.ingredients = ingredients
-            let measure = []
-            for (const key in drink) {
-                if (key.includes('strMeasure')) {
-                    if (drink[key] != null) {
-                        measure.push(drink[key])
-                    }
-                }
-            }
-            drink.measure = measure
-        });
     }
 })
-
-
-

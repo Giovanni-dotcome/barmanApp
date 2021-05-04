@@ -24,6 +24,22 @@
                     <i class="fas fa-search"></i>
                     <input type="text" placeholder="search cocktail" v-model="searchInput" v-on:keyup="searchByName()">
                 </div>
+                <div class="search-select">
+                    <div class="type-search">
+                        <div>filter by cocktail types</div>
+                        <select v-model="selectedType" v-on:change="selectType()">
+                            <option value="all">all</option>
+                            <option v-for="type in typesList" v-bind:value="type.strCategory">{{type.strCategory}}</option>
+                        </select>
+                    </div>
+                    <div class="ingredient-search">
+                        <div>filter by ingredients</div>
+                        <select v-model="selectedIngredient" v-on:change="selectIngredient()">
+                            <option value="all">all</option>
+                            <option v-for="ingredient in ingredientsList" v-bind:value="ingredient.strIngredient1">{{ingredient.strIngredient1}}</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="buttons">
                     <button class="button">Authors</button>
                     <button class="button">About</button>
@@ -32,13 +48,13 @@
                     <i class="fas fa-bars"></i>
                 </div>
             </nav>
-            <main class="deck row-flex-around">
-                <div v-for="drink in drinks" class="card column-flex-around">
+            <main v-if="searchInput.length != 0" class="deck row-flex-around">
+                <div v-if="drink.visibility" v-for="drink in drinks" class="card column-flex-around">
                     <div class="top row-flex-center">
                         <h2 class="name">{{drink.strDrink}}</h2>
                     </div>
                     <div class="content">
-                        <div v-if="visibility(drink)" class="front">
+                        <div v-if="drink.boolean" class="front">
                             <div class="image"><img :src="drink.strDrinkThumb" alt=""></div>
                         </div>
                         <div v-else class="retro">
@@ -47,7 +63,7 @@
                                 <li class="ingredient column-flex-around">
                                     <div class="singleIngredient row-flex-center">
                                         <div class="ingredientSub column-flex-center">
-                                            <span v-if="ingredient != false" v-for="ingredient in drink.ingredients">{{ingredient}}:</span>
+                                            <span v-for="ingredient in drink.ingredients">{{ingredient}}:</span>
                                         </div>
                                         <div class="measureSub column-flex-center">
                                             <span v-for="singleMeasure in drink.measure">{{singleMeasure}}</span>
@@ -61,15 +77,18 @@
                             </div>
                         </div>
                     </div>
+                   
                     <div class="base row-flex-center">
                         <button class="button" @click="flipCard(drink)">flip</button>
                     </div>
-                </div>
+                </div>         
             </main>
-            <footer class="fixed">
+            <div class="flex-row-center" v-else>
+                <div class="logo"><img src="assets/315329-P8RX6F-515.png" alt=""></div>
+                <div>Barman App is a web application searching for your favourite drinks/cocktails. You can find recipies, ingredients and pictures, so you can make your favourite cocktail at home.</div>
                 <i class="fab fa-github"></i>
                 <i class="fab fa-linkedin-in"></i>
-            </footer>
+            </div>
         </div>
     </div>
     
