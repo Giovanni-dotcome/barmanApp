@@ -7,7 +7,9 @@ var app = new Vue({
         typesList: [],
         selectedType: '',
         searchInput: '',
+        typedIngredient: '',
         selectedIngredient: '',
+        ingredientsListFiltered: []
     },
     mounted() {
         axios.get(`${this.URL}list.php?`, {
@@ -16,6 +18,7 @@ var app = new Vue({
             }
         }).then(response => {
             this.ingredientsList = response.data.drinks
+            this.ingredientsListFiltered = this.ingredientsList
         }),
         axios.get(`${this.URL}list.php?`, {
             params: {
@@ -54,36 +57,74 @@ var app = new Vue({
                 });
             })
         },
-        selectType() {
-            if (this.selectedType == 'all') {
-                this.drinks.forEach(drink => {
-                    drink.visibility = true
+        filterIngredients() {
+            if (this.typedIngredient.length != 0) {
+                this.ingredientsListFiltered = this.ingredientsList.filter(ingredient => {
+                    return ingredient.strIngredient1.toUpperCase().includes(this.typedIngredient.toUpperCase())
                 })
             } else {
-                this.drinks.forEach(drink => {
-                    if (drink.strCategory != this.selectedType) {
-                        drink.visibility = false
-                    } else {
-                        drink.visibility = true
-                    }
-                })
+                this.ingredientsListFiltered = this.ingredientsList
             }
         },
-        selectIngredient() {
-            if (this.selectedIngredient == 'all') {
-                this.drinks.forEach(drink => {
-                    drink.visibility = true
-                })
-            } else {
-                this.drinks.forEach(drink => {
-                    var flag = false;
-                    drink.ingredients.forEach(ingredient => {
-                        if (ingredient == this.selectedIngredient) {
-                            flag = true
-                        }
-                    drink.visibility = flag
+        selectSearch() {
+            console.log(this.drinks);
+            if (this.selectedType === 'all' && this.selectedIngredient !== 'all') {
+                if (this.selectedIngredient != '') {
+                    this.drinks.forEach(drink => {
+                        drink.visibility = false;
+                        drink.ingredients.forEach(ingredient => {
+                            if (ingredient == this.selectedIngredient) {
+                                drink.visibility = true;
+                            }
+                        })
                     })
+                } else {
+                    this.drinks.forEach(drink => {
+                        drink.visibility = true;
+                    })
+                }
+            } else if (this.selectedType === 'all' && this.selectedIngredient === 'all') {
+                this.drinks.forEach(drink => {
+                    drink.visibility = true;
                 })
+            } else if (this.selectedType !== 'all' && this.selectedIngredient === 'all') {
+                if (this.selectedType != '') {
+                    this.drinks.forEach(drink => {
+                        if (drink.strCategory == this.selectedType) {
+                            drink.visibility = true;
+                        }
+                    })
+                } else {
+                    this.drinks.forEach(drink => {
+                        drink.visibility = true;
+                    })
+                }
+            } else if (this.selectedType !== 'all' && this.selectedIngredient !== 'all') {
+                if (this.selectedType == '') {
+                    this.drinks.forEach(drink => {
+                        drink.ingredients.forEach(ingredient => {
+                            if (ingredient == this.selectedIngredient) {
+                                drink.visibility = true;
+                            }
+                        })
+                    })
+                } else if (this.selectedIngredient == '') {
+                    this.drinks.forEach(drink => {
+                        if (drink.strCategory == this.selectedType) {
+                            drink.visibility = true;
+                        }
+                    })
+                } else {
+                    this.drinks.forEach(drink => {
+                        if (drink.strCategory == this.selectedType) {
+                            drink.ingredients.forEach(ingredient => {
+                                if (ingredient == this.selectedIngredient) {
+                                    drink.visibility = true
+                                }
+                            })
+                        }
+                    })
+                }  
             }
         }
     }

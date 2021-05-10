@@ -27,16 +27,17 @@
                 <div class="search-select">
                     <div class="type-search">
                         <div>filter by cocktail types</div>
-                        <select v-model="selectedType" v-on:change="selectType()">
+                        <select v-model="selectedType" v-on:change="selectSearch()">
                             <option value="all">all</option>
                             <option v-for="type in typesList" v-bind:value="type.strCategory">{{type.strCategory}}</option>
                         </select>
                     </div>
                     <div class="ingredient-search">
                         <div>filter by ingredients</div>
-                        <select v-model="selectedIngredient" v-on:change="selectIngredient()">
+                        <input type="text" placeholder="type ingredient" v-model="typedIngredient" v-on:keyup="filterIngredients()">
+                        <select v-model="selectedIngredient" v-on:change="selectSearch()">
                             <option value="all">all</option>
-                            <option v-for="ingredient in ingredientsList" v-bind:value="ingredient.strIngredient1">{{ingredient.strIngredient1}}</option>
+                            <option v-for="ingredient in ingredientsListFiltered" v-bind:value="ingredient.strIngredient1" v-on:change="filterIngredients()">{{ingredient.strIngredient1}}</option>
                         </select>
                     </div>
                 </div>
