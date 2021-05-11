@@ -25,31 +25,22 @@
                     <input type="text" placeholder="search cocktail" v-model="searchInput" v-on:keyup="searchByName()">
                 </div>
                 <div class="search-select">
-                    <div class="type-search">
-                        <div>filter by cocktail types</div>
-                        <select v-model="selectedType" v-on:change="selectSearch()">
-                            <option value="all">all</option>
-                            <option v-for="type in typesList" v-bind:value="type.strCategory">{{type.strCategory}}</option>
-                        </select>
-                    </div>
-                    <div class="ingredient-search">
-                        <div>filter by ingredients</div>
-                        <input type="text" placeholder="type ingredient" v-model="typedIngredient" v-on:keyup="filterIngredients()">
-                        <select v-model="selectedIngredient" v-on:change="selectSearch()">
-                            <option value="all">all</option>
-                            <option v-for="ingredient in ingredientsListFiltered" v-bind:value="ingredient.strIngredient1" v-on:change="filterIngredients()">{{ingredient.strIngredient1}}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="buttons">
-                    <button class="button">Authors</button>
-                    <button class="button">About</button>
+                    <select  class="button type-search" v-model="selectedType" v-on:change="selectSearch()">
+                        <option value="" disabled selected>type of drink</option>
+                        <option value="all">all</option>
+                        <option v-for="type in typesList" v-bind:value="type.strCategory">{{type.strCategory}}</option>
+                    </select>
+                    <select class="button ingredient-search" v-model="selectedIngredient" v-on:change="selectSearch()">
+                        <option value="" disabled selected>ingredient</option>
+                        <option value="all">all</option>
+                        <option v-for="ingredient in ingredientsListFiltered" v-bind:value="ingredient.strIngredient1" v-on:change="filterIngredients()">{{ingredient.strIngredient1}}</option>
+                    </select>
                 </div>
                 <div class="burger-menu">
                     <i class="fas fa-bars"></i>
                 </div>
             </nav>
-            <main v-if="searchInput.length != 0" class="deck row-flex-around">
+            <main v-if="searchInput.length != 0" class="generated deck row-flex-around">
                 <div v-if="drink.visibility" v-for="drink in drinks" class="card column-flex-around">
                     <div class="top row-flex-center">
                         <h2 class="name">{{drink.strDrink}}</h2>
@@ -84,15 +75,18 @@
                     </div>
                 </div>         
             </main>
-            <div class="flex-row-center" v-else>
+            <div class="static" v-else>
                 <div class="logo"><img src="assets/315329-P8RX6F-515.png" alt=""></div>
-                <div>Barman App is a web application searching for your favourite drinks/cocktails. You can find recipies, ingredients and pictures, so you can make your favourite cocktail at home.</div>
-                <i class="fab fa-github"></i>
-                <i class="fab fa-linkedin-in"></i>
+                <div class="text">Barman App is a web application searching for your favourite drinks/cocktails. You can find recipies, ingredients and pictures, so you can make your favourite cocktail at home.</div>
+                <div class="links">
+                    <i class="fab fa-github"><a href="https://github.com/Giovanni-dotcome"></a></i>
+                    <i class="fab fa-linkedin-in"></i>
+                </div>
             </div>
         </div>
+        
     </div>
-    
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
     <script src="js/script.js"></script>
 </body>
 </html>

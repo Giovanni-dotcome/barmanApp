@@ -7,7 +7,6 @@ var app = new Vue({
         typesList: [],
         selectedType: '',
         searchInput: '',
-        typedIngredient: '',
         selectedIngredient: '',
         ingredientsListFiltered: []
     },
@@ -57,75 +56,20 @@ var app = new Vue({
                 });
             })
         },
-        filterIngredients() {
-            if (this.typedIngredient.length != 0) {
-                this.ingredientsListFiltered = this.ingredientsList.filter(ingredient => {
-                    return ingredient.strIngredient1.toUpperCase().includes(this.typedIngredient.toUpperCase())
-                })
-            } else {
-                this.ingredientsListFiltered = this.ingredientsList
-            }
-        },
         selectSearch() {
-            console.log(this.drinks);
-            if (this.selectedType === 'all' && this.selectedIngredient !== 'all') {
-                if (this.selectedIngredient != '') {
-                    this.drinks.forEach(drink => {
-                        drink.visibility = false;
-                        drink.ingredients.forEach(ingredient => {
-                            if (ingredient == this.selectedIngredient) {
-                                drink.visibility = true;
-                            }
-                        })
-                    })
-                } else {
-                    this.drinks.forEach(drink => {
-                        drink.visibility = true;
-                    })
+            var flag = false;
+            var flag2 = false;
+            this.drinks.forEach(drink => {
+                if (drink.strCategory == this.selectedType || this.selectedType == 'all') {
+                    flag2 = true;
                 }
-            } else if (this.selectedType === 'all' && this.selectedIngredient === 'all') {
-                this.drinks.forEach(drink => {
-                    drink.visibility = true;
+                drink.ingredients.forEach(ingredient => {
+                    if (ingredient == this.selectedIngredient || this.selectedIngredient == 'all') {
+                        flag = true;
+                    }
                 })
-            } else if (this.selectedType !== 'all' && this.selectedIngredient === 'all') {
-                if (this.selectedType != '') {
-                    this.drinks.forEach(drink => {
-                        if (drink.strCategory == this.selectedType) {
-                            drink.visibility = true;
-                        }
-                    })
-                } else {
-                    this.drinks.forEach(drink => {
-                        drink.visibility = true;
-                    })
-                }
-            } else if (this.selectedType !== 'all' && this.selectedIngredient !== 'all') {
-                if (this.selectedType == '') {
-                    this.drinks.forEach(drink => {
-                        drink.ingredients.forEach(ingredient => {
-                            if (ingredient == this.selectedIngredient) {
-                                drink.visibility = true;
-                            }
-                        })
-                    })
-                } else if (this.selectedIngredient == '') {
-                    this.drinks.forEach(drink => {
-                        if (drink.strCategory == this.selectedType) {
-                            drink.visibility = true;
-                        }
-                    })
-                } else {
-                    this.drinks.forEach(drink => {
-                        if (drink.strCategory == this.selectedType) {
-                            drink.ingredients.forEach(ingredient => {
-                                if (ingredient == this.selectedIngredient) {
-                                    drink.visibility = true
-                                }
-                            })
-                        }
-                    })
-                }  
-            }
+                drink.visibility = flag && flag2;
+            })
         }
     }
 })

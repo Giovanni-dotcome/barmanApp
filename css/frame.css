@@ -312,3 +312,6 @@ select[multiple]
     animation-fill-mode: backwards;
 }
 
+select:focus {
+	outline: none;
+}
